@@ -117,10 +117,10 @@ function spocitejTopeni {
 			mPLYS="0.0"
 			pdilS="0.0 %"
 		else
-			mPLYS=$(python -c "print('%4.1f'%round($PLYNS*$mTMS*1.0/$CELKS,1))")
-			pdilS=$(python -c "print('%3.1f'%round($mTMS*1.0/$CELKS,3)*100)")\ %
+			mPLYS=$(python -c "print('{0:.1f}'.format(round($PLYNS*$mTMS*1.0/$CELKS,1)))")
+			pdilS=$(python -c "print('{0:.1f}'.format(round($mTMS*1.0/$CELKS,3)*100))")\ %
 		fi
-		SPOTREBA=$(python -c "print($SPOTREBA+$mPLYS)")
+		SPOTREBA=$(python -c "print('{0:.1f}'.format($SPOTREBA+$mPLYS))")
 
 		# zapis do vystupu
 		if [[ "$VYSTUP" == "" ]]; then
