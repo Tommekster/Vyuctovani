@@ -117,8 +117,8 @@ function spocitejTopeni {
 			mPLYS="0.0"
 			pdilS="0.0 %"
 		else
-			mPLYS=$(python -c "print(round($PLYNS*$mTMS*1.0/$CELKS,1))")
-			pdilS=$(python -c "print(round($mTMS*1.0/$CELKS,3)*100)")\ %
+			mPLYS=$(python -c "print('%3.1f'%round($PLYNS*$mTMS*1.0/$CELKS,1))")
+			pdilS=$(python -c "print('%2.1f'%round($mTMS*1.0/$CELKS,3)*100)")\ %
 		fi
 		SPOTREBA=$(python -c "print($SPOTREBA+$mPLYS)")
 
