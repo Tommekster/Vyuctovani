@@ -16,7 +16,7 @@ function uDatum {
 
 function abs {
 	VALUE=$1
-	expr $VALUE \< 0 >/dev/null && VALUE=$(python -c "print ($VALUE)*(-1)")
+	expr $VALUE \< 0 >/dev/null && VALUE=$(python -c "print(($VALUE)*(-1))")
 	echo $VALUE
 }
 
@@ -117,10 +117,10 @@ function spocitejTopeni {
 			mPLYS="0.0"
 			pdilS="0.0 %"
 		else
-			mPLYS=$(python -c "print round($PLYNS*$mTMS*1.0/$CELKS,1)")
-			pdilS=$(python -c "print round($mTMS*1.0/$CELKS,3)*100")\ %
+			mPLYS=$(python -c "print(round($PLYNS*$mTMS*1.0/$CELKS,1))")
+			pdilS=$(python -c "print(round($mTMS*1.0/$CELKS,3)*100)")\ %
 		fi
-		SPOTREBA=$(python -c print\ $SPOTREBA+$mPLYS)
+		SPOTREBA=$(python -c "print($SPOTREBA+$mPLYS)")
 
 		# zapis do vystupu
 		if [[ "$VYSTUP" == "" ]]; then
@@ -159,10 +159,10 @@ function sectiZalohy {
 	zalohy=0
 	while IFS= read -r radek; do
 		[[ "$radek" == "" ]] && radek=0
-		zalohy=$(python -c "print $zalohy+$radek")
+		zalohy=$(python -c "print($zalohy+$radek)")
 	done <<< "$(cat "$POHFIL" | grep "$SMLOUVA	" | cut -f6 | sed s/[^0-9\-]*//g)"
 
-	echo $(python -c "print \"{0:.2f}\".format(round($zalohy,2))")
+	echo $(python -c "print(\"{0:.2f}\".format(round($zalohy,2)))")
 }
 
 function upravTex {
@@ -269,19 +269,19 @@ VODA1=$(head -n $voLINE1 "$VOFILE" | tail -1 | cut -f$[$VOMR + 2])
 ELVT2=$(head -n $elLINE2 "$ELFILE" | tail -1 | cut -f$[2 * $ELTR])
 ELNT2=$(head -n $elLINE2 "$ELFILE" | tail -1 | cut -f$[2 * $ELTR + 1])
 VODA2=$(head -n $voLINE2 "$VOFILE" | tail -1 | cut -f$[$VOMR + 2])
-ELVTS=$(python -c "print $ELVT2-$ELVT1")
-ELNTS=$(python -c "print $ELNT2-$ELNT1")
-ELVNS=$(python -c "print $ELVTS+$ELNTS")
-VODAS=$(python -c "print $VODA2-$VODA1")
+ELVTS=$(python -c "print($ELVT2-$ELVT1)")
+ELNTS=$(python -c "print($ELNT2-$ELNT1)")
+ELVNS=$(python -c "print($ELVTS+$ELNTS)")
+VODAS=$(python -c "print($VODA2-$VODA1)")
 TEPLO=$(echo "$VYTOR" | cut -f2)
-DATS=$(python -c "print ($DATUMDO-$DATUMOD)/86400")
-MESIS=$(python -c "print round($DATS/30.41667,3)")
+DATS=$(python -c "print(($DATUMDO-$DATUMOD)/86400)")
+MESIS=$(python -c "print(round($DATS/30.41667,3))")
 DATUM_OD=$(date -ju -f %s $DATUMOD +%d.%m.%Y)
 DATUM_DO=$(date -ju -f %s $DATUMDO +%d.%m.%Y)
 
 # vypocet nakladu podle udaju z ceniku
 function vyrobCenu {
-	echo $(python -c "print \"{0:.2f}\".format(round($1,2))")
+	echo $(python -c "print(\"{0:.2f}\".format(round($1,2)))")
 }
 N_VODAk=$(vyrobCenu "$VODAS*${SVkom[0]}")
 N_VODAsp=$(vyrobCenu "$DATS*${SVSP[0]}")
@@ -299,8 +299,8 @@ fi
 
 # vypocet vyuctovani - odecist od zaloh, vyhodnotit poplatek, nedoplatek
 ZALOHY=$(sectiZalohy)
-NEDOPLATEK=$(python -c "print $N_CELK-$ZALOHY")
-PREPLATEK=$(python -c "print $ZALOHY-$N_CELK")
+NEDOPLATEK=$(python -c "print($N_CELK-$ZALOHY)")
+PREPLATEK=$(python -c "print($ZALOHY-$N_CELK)")
 if [[ "$(echo $NEDOPLATEK | cut -c 1)" == "-" ]]; then
 	POPIS_PLATEK="Přeplatek"
 	HODN_PLATEK=$PREPLATEK
